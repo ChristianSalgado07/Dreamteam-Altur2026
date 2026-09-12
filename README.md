@@ -267,7 +267,3 @@ Tamara Padilla
 Michelle Lagos
 
 ---
-
-## 📝 Licencia
-
-MIT (proyecto hackathon)

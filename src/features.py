@@ -1,21 +1,26 @@
 import numpy as np
 import librosa
-import webrtcvad
 from scipy.signal import medfilt
 
-def float_to_pcm16(y):
-    y = np.clip(y, -1, 1)
-    return (y * 32767).astype(np.int16)
-
-def get_vad_flags(y, sr, aggressiveness=2, frame_ms=20):
-    vad = webrtcvad.Vad(aggressiveness)
-    pcm = float_to_pcm16(y)
+def get_vad_flags(y, sr, frame_ms=20, energy_threshold=None):
+    """
+    VAD simple basado en energía RMS. Devuelve un array de bool.
+    """
     frame_size = int(sr * frame_ms / 1000)
+    hop = frame_size
     flags = []
-    for i in range(0, len(pcm) - frame_size, frame_size):
-        frame = pcm[i:i+frame_size]
-        flags.append(vad.is_speech(frame.tobytes(), sr))
-    return np.array(flags)
+    energies = []
+    for i in range(0, len(y) - frame_size, hop):
+        frame = y[i:i+frame_size]
+        energies.append(np.sqrt(np.mean(frame**2) + 1e-12))
+    energies = np.array(energies)
+    if energy_threshold is None:
+        # umbral adaptativo
+        energy_threshold = max(np.percentile(energies, 30) * 1.5, 1e-4)
+    flags = (energies > energy_threshold).astype(bool)
+    # suavizado para evitar parpadeos
+    flags = medfilt(flags.astype(float), kernel_size=5).astype(bool)
+    return flags
 
 def vad_to_segments(flags, frame_ms=20):
     segments = []
@@ -30,12 +35,15 @@ def vad_to_segments(flags, frame_ms=20):
             in_speech = False
     if in_speech:
         segments.append((start, len(flags)))
+    # filtrar segmentos muy cortos (< 60 ms)
+    min_frames = int(60 / frame_ms)
+    segments = [(s, e) for s, e in segments if (e - s) >= min_frames]
     return segments
 
 def extract_behavioral_features(caller, agent, sr):
     frame_ms = 20
-    caller_flags = get_vad_flags(caller, sr)
-    agent_flags = get_vad_flags(agent, sr)
+    caller_flags = get_vad_flags(caller, sr, frame_ms)
+    agent_flags = get_vad_flags(agent, sr, frame_ms)
     min_len = min(len(caller_flags), len(agent_flags))
     caller_flags = caller_flags[:min_len]
     agent_flags = agent_flags[:min_len]
@@ -51,8 +59,8 @@ def extract_behavioral_features(caller, agent, sr):
     caller_turns = len(caller_segs)
     agent_turns = len(agent_segs)
 
-    caller_turn_durs = [(e-s)*frame_ms/1000.0 for s,e in caller_segs]
-    agent_turn_durs = [(e-s)*frame_ms/1000.0 for s,e in agent_segs]
+    caller_turn_durs = [(e-s)*frame_ms/1000.0 for s, e in caller_segs]
+    agent_turn_durs = [(e-s)*frame_ms/1000.0 for s, e in agent_segs]
     avg_caller_turn = np.mean(caller_turn_durs) if caller_turn_durs else 0
     avg_agent_turn = np.mean(agent_turn_durs) if agent_turn_durs else 0
     std_caller_turn = np.std(caller_turn_durs) if caller_turn_durs else 0
@@ -60,7 +68,7 @@ def extract_behavioral_features(caller, agent, sr):
 
     latencies = []
     for c_start, c_end in caller_segs:
-        prev_agent = [s for s,e in agent_segs if e <= c_start]
+        prev_agent = [s for s, e in agent_segs if e <= c_start]
         if prev_agent:
             last_agent_end = max(prev_agent)
             latencies.append((c_start - last_agent_end) * frame_ms / 1000.0)

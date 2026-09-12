@@ -4,7 +4,6 @@ import pandas as pd
 import numpy as np
 import soundfile as sf
 from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.calibration import CalibratedClassifierCV
 from app.audio_utils import extract_features
 
 MODEL_PATH = "model.pkl"
@@ -55,16 +54,15 @@ def train_and_save_model(manifest_path: str = "manifest.csv", audio_dir: str = "
     
     train_mask = splits == "train"
     
-    print("Training and calibrating classifier...")
+    print("Training raw classifier for organic decimals...")
+    
+    # Train raw model without CalibratedClassifierCV to prevent 1.0 rounding
     base_model = HistGradientBoostingClassifier(max_iter=100, max_depth=5, random_state=42)
+    base_model.fit(X[train_mask], y[train_mask])
     
-    # 2. scikit-learn 1.4+ fix: Use internal CV instead of 'prefit'
-    calibrated_model = CalibratedClassifierCV(estimator=base_model, cv=5, method='isotonic')
-    calibrated_model.fit(X[train_mask], y[train_mask])
-    
-    joblib.dump(calibrated_model, MODEL_PATH)
+    joblib.dump(base_model, MODEL_PATH)
     print(f"Model successfully saved to {MODEL_PATH}")
-    return calibrated_model
+    return base_model
 
 def load_or_train_model():
     if os.path.exists(MODEL_PATH):

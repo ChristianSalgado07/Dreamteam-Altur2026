@@ -4,14 +4,14 @@
 
 ---
 
-## 🎯 El problema
+## El problema
 
 La voz dejó de ser prueba de identidad. Con unos segundos de audio público, cualquiera puede clonar una voz lo suficiente para engañar a humanos y máquinas.  
 En Latinoamérica, millones de personas dependen del teléfono como único canal bancario — y son exactamente las más expuestas a fraude de identidad y suplantación. Los contact centers, humanos o con IA, no tienen forma robusta de verificar si el que llama es real.
 
 ---
 
-## 🧠 Nuestra solución: tres capas ortogonales
+## Nuestra solución: tres capas ortogonales
 
 Nuestro enfoque no se apoya en una sola señal (que puede ser falsificada), sino en **tres fuentes de evidencia ortogonales** que capturan aspectos diferentes de la voz humana.
 
@@ -79,7 +79,7 @@ El modelo usa **Random Forest calibrado (500 árboles, calibración sigmoid)** e
 
 ---
 
-## ⚙️ Decisiones de diseño
+## Decisiones de diseño
 
 ### Augmentation telefónica
 Entrenar solo con "datos limpios" es frágil. Simulamos **condiciones reales del teléfono**:
@@ -103,7 +103,7 @@ Transcribir cada llamada (2 minutos) toma ~2 horas en GPU. **Cacheamos en pickle
 
 ---
 
-## 🚀 Cómo correr
+## Cómo correr
 
 ### Instalación
 
@@ -214,7 +214,7 @@ Dreamteam-Altur2026/
 
 ---
 
-## 🔌 API Endpoint: `/detect`
+## API Endpoint: `/detect`
 
 **POST** `http://localhost:8000/detect`
 
@@ -258,10 +258,13 @@ Dreamteam-Altur2026/
 
 ---
 
-## 🙌 Créditos
+## Créditos
 
 **Equipo Dreamteam**  
-HackMTY 2026
+Christian Salgado
+Ángel Luna
+Tamara Padilla
+Michelle Lagos
 
 ---
 

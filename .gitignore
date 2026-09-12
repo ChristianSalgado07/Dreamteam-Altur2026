@@ -1,0 +1,8 @@
+audio/
+turns/
+*.wav
+*.json
+*.csv
+*.zip
+*.tar.gz
+*.pkl

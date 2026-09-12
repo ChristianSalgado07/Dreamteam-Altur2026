@@ -1,8 +1,10 @@
-fastapi
-uvicorn[standard]
 numpy
-scipy
+pandas
+scikit-learn
 librosa
 soundfile
-scikit-learn
-python-multipart
+webrtcvad
+fastapi
+uvicorn
+joblib
+scipy

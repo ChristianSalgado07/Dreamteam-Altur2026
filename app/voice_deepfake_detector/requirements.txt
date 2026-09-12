@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+numpy
+pandas
+librosa
+xgboost
+scikit-learn
+joblib
+soundfile
+audioread

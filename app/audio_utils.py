@@ -55,69 +55,56 @@ def compute_vad_intervals(audio_mono: np.ndarray, sr: int = 8000, frame_len: int
     return intervals, is_speech, rms
 
 def extract_features(caller: np.ndarray, agent: np.ndarray, sr: int = 8000) -> np.ndarray:
-    """Extracts Temporal Dynamics, Environmental Consistency, and Acoustic Footprints."""
+    """Extracts Temporal, Environmental, Acoustic, Semantic, Biological, and Phase features."""
     caller_intervals, caller_vad, caller_rms = compute_vad_intervals(caller, sr)
     agent_intervals, agent_vad, agent_rms = compute_vad_intervals(agent, sr)
 
-    # 1. Turn-Transition Latencies (Agent stops -> Caller speaks)
-    latencies = []
-    for a_start, a_end in agent_intervals:
-        subsequent = [c_start - a_end for c_start, _ in caller_intervals if c_start >= a_end]
-        if subsequent:
-            latencies.append(min(subsequent))
-    
+    # 1. Turn-Transition Latencies
+    latencies = [c_start - a_end for a_start, a_end in agent_intervals for c_start, _ in caller_intervals if c_start >= a_end]
     mean_ttl = float(np.mean(latencies)) if latencies else 0.5
     std_ttl = float(np.std(latencies)) if latencies else 0.0
     
     # 2. Barge-in / Overlap Dynamics
     min_len = min(len(caller_vad), len(agent_vad))
     overlap_frames = np.sum((caller_vad[:min_len]) & (agent_vad[:min_len]))
-    total_speech_frames = np.sum((caller_vad[:min_len]) | (agent_vad[:min_len])) + 1e-6
-    overlap_ratio = float(overlap_frames / total_speech_frames)
+    overlap_ratio = float(overlap_frames / (np.sum((caller_vad[:min_len]) | (agent_vad[:min_len])) + 1e-6))
 
-    # 3. Silence / Ambient Noise Autocorrelation (Detect looping background noise)
+    # 3. Ambient Noise Autocorrelation
     silent_indices = np.where(~caller_vad[:len(caller_rms)])[0]
     if len(silent_indices) > 50:
         silence_rms = caller_rms[silent_indices]
-        silence_mean_energy = float(np.mean(silence_rms))
-        silence_std_energy = float(np.std(silence_rms))
-        
-        norm_silence = silence_rms - np.mean(silence_rms)
-        autocorr = correlate(norm_silence, norm_silence, mode='full')
-        autocorr = autocorr[len(autocorr)//2:]
+        silence_mean_energy, silence_std_energy = float(np.mean(silence_rms)), float(np.std(silence_rms))
+        norm_silence = silence_rms - silence_mean_energy
+        autocorr = correlate(norm_silence, norm_silence, mode='full')[len(norm_silence)-1:]
         peak_autocorr = float(np.max(autocorr[1:] / (autocorr[0] + 1e-6))) if len(autocorr) > 1 else 0.0
     else:
-        silence_mean_energy = 0.0
-        silence_std_energy = 0.0
-        peak_autocorr = 0.0
+        silence_mean_energy, silence_std_energy, peak_autocorr = 0.0, 0.0, 0.0
 
-    # 4. Acoustic & Vocoder Footprint (Fast replacements for PYIN)
-    mfcc_caller = librosa.feature.mfcc(y=caller, sr=sr, n_mfcc=13)
-    caller_mfcc_mean = np.mean(mfcc_caller, axis=1)
-    
-    mfcc_agent = librosa.feature.mfcc(y=agent, sr=sr, n_mfcc=13)
-    agent_mfcc_mean = np.mean(mfcc_agent, axis=1)
-
+    # 4. Acoustic Features (MFCCs)
+    caller_mfcc_mean = np.mean(librosa.feature.mfcc(y=caller, sr=sr, n_mfcc=13), axis=1)
+    agent_mfcc_mean = np.mean(librosa.feature.mfcc(y=agent, sr=sr, n_mfcc=13), axis=1)
     zcr = float(np.mean(librosa.feature.zero_crossing_rate(caller)))
     spec_flatness = float(np.mean(librosa.feature.spectral_flatness(y=caller)))
 
-    # Combine all 34 features into a single flat vector for XGBoost
-    features = np.concatenate((
-        [mean_ttl, std_ttl, overlap_ratio, silence_mean_energy, silence_std_energy, peak_autocorr, zcr, spec_flatness],
-        caller_mfcc_mean,
-        agent_mfcc_mean
-    ))
-    # 5. Semantic & Cognitive Traps
+    # 5. Semantic Traps
     semantic_metrics = extract_semantic_features(caller, sr)
 
-    # Combine all 37 features into a single flat vector for XGBoost
-    features = np.concatenate((
+    # 6. Biological Incongruence (Stress Tremors & Breathing)
+    # Humans have vocal micro-tremors (centroid volatility) and inhale during VAD silences
+    centroid = librosa.feature.spectral_centroid(y=caller, sr=sr)[0]
+    micro_tremor_variance = float(np.std(centroid))
+    breathing_proxy = float(silence_mean_energy) if silence_mean_energy > 0.0001 else 0.0 
+
+    # 7. Phase Anomalies (Vocoder Footprint)
+    # Synthetic vocoders leave mathematical patterns in phase derivatives 
+    stft_caller = librosa.stft(caller)
+    phase_diff = np.diff(np.angle(stft_caller), axis=1)
+    phase_volatility = float(np.var(phase_diff))
+
+    return np.concatenate((
         [mean_ttl, std_ttl, overlap_ratio, silence_mean_energy, silence_std_energy, peak_autocorr, zcr, spec_flatness],
         caller_mfcc_mean,
         agent_mfcc_mean,
-        semantic_metrics
-    ))
-    
-    return features.astype(np.float32)
-    
-    return features.astype(np.float32)
+        semantic_metrics,
+        [micro_tremor_variance, breathing_proxy, phase_volatility]
+    )).astype(np.float32)

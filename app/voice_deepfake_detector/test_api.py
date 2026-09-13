@@ -2,13 +2,13 @@
 Simula la llamada que harán los jueces.
 Uso:
     python test_api.py <ruta_al_wav>
-    python test_api.py    # usa un ejemplo por defecto
+    python test_api.py # usa un ejemplo por defecto
 """
 import base64
 import sys
 import requests
 
-API_URL = "http://localhost:8000/detect"
+API_URL = "https://details-adjustment-frederick-blocked.trycloudflare.com/detect"
 WAV_PATH = "altur-challenge-audio/audio/call_0181ce113ebe.wav"
 
 

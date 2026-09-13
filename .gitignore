@@ -1,0 +1,36 @@
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Env
+.env
+.env.local
+
+# Modelos y datasets grandes
+*.pkl
+*.npy
+audio/
+altur-challenge-audio/
+manifest.csv
+features_cache.pkl
+feature_stats.pkl
+
+# Excepción: el modelo del voice_deepfake_detector SÍ va al repo
+!app/voice_deepfake_detector/outputs/modelo_final_audio.pkl
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

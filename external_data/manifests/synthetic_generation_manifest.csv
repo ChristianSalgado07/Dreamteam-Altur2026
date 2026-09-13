@@ -1,0 +1,49 @@
+external_id,generator_id,text,raw_file
+ext_gtts_000,gtts_google,"Hola, buenos días, ¿en qué le puedo ayudar hoy?",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_000.mp3
+ext_gtts_001,gtts_google,"Quisiera revisar el estado de mi cuenta, por favor.",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_001.mp3
+ext_gtts_002,gtts_google,El clima en la ciudad ha estado muy variable esta semana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_002.mp3
+ext_gtts_003,gtts_google,Me gustaría reservar una mesa para cuatro personas esta noche.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_003.mp3
+ext_gtts_004,gtts_google,El tren sale de la estación central a las nueve de la mañana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_004.mp3
+ext_gtts_005,gtts_google,"Por favor, envíeme una copia del contrato por correo electrónico.",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_005.mp3
+ext_gtts_006,gtts_google,El proyecto se entregará la próxima semana según lo planeado.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_006.mp3
+ext_gtts_007,gtts_google,"¿Podría repetir su número de referencia, por favor?",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_007.mp3
+ext_gtts_008,gtts_google,La reunión ha sido reprogramada para el jueves por la tarde.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_008.mp3
+ext_gtts_009,gtts_google,Necesito actualizar mi dirección en el sistema.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_009.mp3
+ext_gtts_010,gtts_google,El paquete llegará entre dos y cinco días hábiles.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_010.mp3
+ext_gtts_011,gtts_google,Gracias por su paciencia mientras resolvemos este inconveniente.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_011.mp3
+ext_gtts_012,gtts_google,El restaurante está ubicado cerca de la plaza principal.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_012.mp3
+ext_gtts_013,gtts_google,¿Cuál es el horario de atención los fines de semana?,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_013.mp3
+ext_gtts_014,gtts_google,La biblioteca cierra a las ocho de la noche entre semana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_014.mp3
+ext_gtts_015,gtts_google,Le recomiendo revisar los términos y condiciones antes de continuar.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_015.mp3
+ext_gtts_016,gtts_google,El vuelo tiene una escala de dos horas en la capital.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_016.mp3
+ext_gtts_017,gtts_google,Estamos trabajando para resolver el problema lo antes posible.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_017.mp3
+ext_gtts_018,gtts_google,¿Me puede confirmar su nombre completo y fecha de nacimiento?,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_018.mp3
+ext_gtts_019,gtts_google,El equipo técnico visitará su domicilio mañana por la mañana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_019.mp3
+ext_gtts_020,gtts_google,Recuerde traer una identificación válida a la cita.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_020.mp3
+ext_gtts_021,gtts_google,El pago se procesará en un plazo máximo de tres días.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_021.mp3
+ext_gtts_022,gtts_google,"Muchas gracias por comunicarse con nosotros, que tenga buen día.",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_022.mp3
+ext_gtts_023,gtts_google,¿Desea que le enviemos una notificación cuando esté listo?,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_gtts/ext_gtts_023.mp3
+ext_espeak_000,espeak_ng,"Hola, buenos días, ¿en qué le puedo ayudar hoy?",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_000.wav
+ext_espeak_001,espeak_ng,"Quisiera revisar el estado de mi cuenta, por favor.",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_001.wav
+ext_espeak_002,espeak_ng,El clima en la ciudad ha estado muy variable esta semana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_002.wav
+ext_espeak_003,espeak_ng,Me gustaría reservar una mesa para cuatro personas esta noche.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_003.wav
+ext_espeak_004,espeak_ng,El tren sale de la estación central a las nueve de la mañana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_004.wav
+ext_espeak_005,espeak_ng,"Por favor, envíeme una copia del contrato por correo electrónico.",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_005.wav
+ext_espeak_006,espeak_ng,El proyecto se entregará la próxima semana según lo planeado.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_006.wav
+ext_espeak_007,espeak_ng,"¿Podría repetir su número de referencia, por favor?",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_007.wav
+ext_espeak_008,espeak_ng,La reunión ha sido reprogramada para el jueves por la tarde.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_008.wav
+ext_espeak_009,espeak_ng,Necesito actualizar mi dirección en el sistema.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_009.wav
+ext_espeak_010,espeak_ng,El paquete llegará entre dos y cinco días hábiles.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_010.wav
+ext_espeak_011,espeak_ng,Gracias por su paciencia mientras resolvemos este inconveniente.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_011.wav
+ext_espeak_012,espeak_ng,El restaurante está ubicado cerca de la plaza principal.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_012.wav
+ext_espeak_013,espeak_ng,¿Cuál es el horario de atención los fines de semana?,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_013.wav
+ext_espeak_014,espeak_ng,La biblioteca cierra a las ocho de la noche entre semana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_014.wav
+ext_espeak_015,espeak_ng,Le recomiendo revisar los términos y condiciones antes de continuar.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_015.wav
+ext_espeak_016,espeak_ng,El vuelo tiene una escala de dos horas en la capital.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_016.wav
+ext_espeak_017,espeak_ng,Estamos trabajando para resolver el problema lo antes posible.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_017.wav
+ext_espeak_018,espeak_ng,¿Me puede confirmar su nombre completo y fecha de nacimiento?,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_018.wav
+ext_espeak_019,espeak_ng,El equipo técnico visitará su domicilio mañana por la mañana.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_019.wav
+ext_espeak_020,espeak_ng,Recuerde traer una identificación válida a la cita.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_020.wav
+ext_espeak_021,espeak_ng,El pago se procesará en un plazo máximo de tres días.,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_021.wav
+ext_espeak_022,espeak_ng,"Muchas gracias por comunicarse con nosotros, que tenga buen día.",/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_022.wav
+ext_espeak_023,espeak_ng,¿Desea que le enviemos una notificación cuando esté listo?,/Users/tam_pr/hackmty2026/Dreamteam-Altur2026/external_data/raw/synthetic_espeak/ext_espeak_023.wav

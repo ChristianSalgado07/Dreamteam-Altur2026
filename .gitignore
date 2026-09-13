@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Generated / processed data
+data/processed/
+data/features/
+processed/
+features/
+outputs/
+
+# Generated audio
+*.mp3
+*.flac
+*.wav
+
+# Model weights/checkpoints
+*.pt
+*.pth
+*.joblib
+
+# Generated analysis files
+*.parquet
+*.pkl
+*.pickle
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

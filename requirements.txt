@@ -6,3 +6,9 @@ librosa
 soundfile
 scikit-learn
 python-multipart
+matplotlib
+pandas
+tabulate
+faster-whisper
+torch
+sounddevice

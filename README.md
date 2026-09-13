@@ -6,6 +6,16 @@ Sistema end-to-end que clasifica si el llamante de una conversación bancaria es
 
 ---
 
+## 🔗 Enlaces
+
+| Recurso | URL |
+|---|---|
+| **Endpoint para evaluación** | https://dreamteam-altur2026-production-38b6.up.railway.app/detect |
+| **Consola visual (frontend)** | https://dreamteam-altur2026.vercel.app/ |
+| **Repositorio** | https://github.com/ChristianSalgado07/Dreamteam-Altur2026 |
+
+---
+
 ## El problema
 
 En Latinoamérica, millones de personas dependen del teléfono como único canal bancario. Con unos segundos de audio público, cualquiera puede clonar una voz lo suficiente para engañar a humanos y máquinas. Los contact centers —humanos o automatizados— no tienen forma robusta de verificar si el que llama es real.
@@ -51,7 +61,7 @@ Dreamteam-Altur2026/
 
 ### Por qué esta separación
 
-- **Backend y frontend viven separados** porque se despliegan de forma independiente. El backend va a Railway vía Docker. El frontend puede ir a Vercel, Netlify, o servirse estático.
+- **Backend y frontend viven separados** porque se despliegan de forma independiente. El backend va a Railway vía Docker. El frontend va a Vercel.
 - **El detector vive en su propia carpeta** (`app/voice_deepfake_detector/`) para que su Dockerfile tenga todo lo que necesita sin arrastrar el frontend.
 - **El Dockerfile copia solo lo mínimo indispensable** (API, features, configuración y modelo). El resto del proyecto (frontend, dataset, scripts de análisis) no entra al contenedor.
 - **`outputs/` guarda el modelo entrenado** porque es un artefacto de build, no código fuente.
@@ -60,7 +70,21 @@ Dreamteam-Altur2026/
 
 ## Cómo correrlo
 
-### Backend (API)
+### Producción (para evaluar)
+
+El sistema ya está desplegado y disponible:
+
+- **Backend:** https://dreamteam-altur2026-production-38b6.up.railway.app
+- **Frontend:** https://dreamteam-altur2026.vercel.app/
+
+Prueba rápida del endpoint:
+
+```bash
+curl https://dreamteam-altur2026-production-38b6.up.railway.app/
+# → {"status":"Altur Voice Deepfake Detector is Active"}
+```
+
+### Backend local (API)
 
 ```bash
 cd app/voice_deepfake_detector
@@ -70,7 +94,7 @@ python api.py
 
 La API queda escuchando en `http://localhost:8000`.
 
-### Frontend (consola visual)
+### Frontend local (consola visual)
 
 En otra terminal:
 
@@ -87,13 +111,9 @@ El dashboard queda en `http://localhost:5173`.
 # Health check
 curl http://localhost:8000/
 
-# Probar un audio del dataset
-cd app/voice_deepfake_detector
-python test_api.py altur-challenge-audio/audio/call_0181ce113ebe.wav
-
 # Evaluar con el cliente oficial del challenge
 python check_endpoint.py \
-  --url http://localhost:8000/detect \
+  --url https://dreamteam-altur2026-production-38b6.up.railway.app/detect \
   --manifest manifest.csv \
   --audio-dir altur-challenge-audio/audio \
   --split val --n 20
@@ -107,7 +127,22 @@ FastAPI genera una UI automática en `http://localhost:8000/docs`.
 
 ## Deploy
 
-El backend incluye un `Dockerfile` listo para Railway, Render, o cualquier PaaS que soporte Docker.
+### Arquitectura de producción
+
+| Componente | Plataforma | URL |
+|---|---|---|
+| Backend (FastAPI) | Railway (vía Docker) | https://dreamteam-altur2026-production-38b6.up.railway.app |
+| Frontend (React) | Vercel | https://dreamteam-altur2026.vercel.app/ |
+
+### Configuración en Railway
+
+- Root Directory: `app/voice_deepfake_detector`
+- Builder: Dockerfile
+- Port: dinámico vía `$PORT`
+
+### Configuración en Vercel
+
+- Variable de entorno: `VITE_API_URL=https://dreamteam-altur2026-production-38b6.up.railway.app`
 
 ### Por qué Docker
 
@@ -115,17 +150,11 @@ Desplegar sin Docker implica que el servidor tenga las versiones correctas de Py
 
 ### Por qué las capas importan
 
-El Dockerfile está ordenado para que el **build sea rápido y la imagen pequeña**. Estos dos objetivos se logran separando el contenido en capas que Docker cachea de forma independiente:
+El Dockerfile está ordenado para que el **build sea rápido y la imagen pequeña**:
 
-- **Las dependencias del sistema y de Python cambian poco.** Al aislarlas en sus propias capas, Docker las reutiliza entre builds. Esto convierte un redeploy de 5-10 minutos en uno de 30 segundos.
-- **El código de la aplicación cambia seguido.** Al copiarlo en una capa al final, solo esa capa se reconstruye cuando hay cambios. Las dependencias quedan cacheadas.
-- **Solo entra lo indispensable.** El contenedor no necesita el frontend, el dataset, ni los scripts de análisis. Copiar únicamente los 6 archivos que la API usa mantiene la imagen ligera (~500 MB vs ~1.5 GB) y el arranque rápido.
-
-### Configuración en Railway
-
-- Root Directory: `app/voice_deepfake_detector`
-- Dockerfile Path: `./Dockerfile`
-- Port: dinámico vía `$PORT` (Railway lo inyecta automáticamente)
+- Las dependencias del sistema y de Python cambian poco. Al aislarlas, Docker las reutiliza entre builds.
+- El código cambia seguido, así que se copia al final. Solo esa capa se reconstruye.
+- Solo entra lo indispensable (~500 MB vs ~1.5 GB), lo que acelera el arranque.
 
 ### Build y run local
 
@@ -181,19 +210,6 @@ Entrenando solo con el split `train` y evaluando sobre `val` (voces que el model
 | ROC AUC | 1.000 |
 | Brier score | 0.000 |
 
-### Cliente oficial del challenge (`check_endpoint.py`)
-
-Evaluado vía HTTP real contra el endpoint público:
-
-| Métrica | Valor |
-|---|---|
-| Llamadas procesadas | 71 |
-| Errores | 0 |
-| Latencia media | 2.97 s |
-| Latencia máxima | 6.10 s |
-
-**Nota sobre las métricas:** el 100% en el hold-out honesto tiene un intervalo de confianza del 95% de aproximadamente [95%, 100%] dado el tamaño de 71 muestras. La CV de 5 folds (98.51%) es la estimación más conservadora.
-
 ---
 
 ## Endpoint HTTP
@@ -235,7 +251,7 @@ Campos:
 |---|---|---|
 | is_synthetic | bool | true si el caller es IA, false si es humano |
 | confidence | float | Certeza del veredicto (0 a 1) |
-| recommended_action | string | trigger_whatsapp_2fa o proceed_call |
+| recommended_action | string | Acción sugerida: proceder o escalar a verificación |
 | breakdown | dict | Importancia relativa de cada categoría |
 
 ---

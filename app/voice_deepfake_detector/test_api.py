@@ -8,7 +8,7 @@ import base64
 import sys
 import requests
 
-API_URL = "https://details-adjustment-frederick-blocked.trycloudflare.com/detect"
+API_URL = "https://webshots-bomb-lined-doe.trycloudflare.com/detect"
 WAV_PATH = "altur-challenge-audio/audio/call_0181ce113ebe.wav"
 
 

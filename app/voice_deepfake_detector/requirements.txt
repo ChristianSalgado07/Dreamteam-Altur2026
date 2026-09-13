@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pydantic
+numpy
+pandas
+scipy
+librosa
+xgboost
+scikit-learn
+joblib
+soundfile
+audioread
+tqdm
+matplotlib
+seaborn

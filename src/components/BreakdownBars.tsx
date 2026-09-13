@@ -1,0 +1,7 @@
+import { motion } from 'framer-motion';
+import { breakdownMeta, parsePercent } from '../lib/utils';
+import type { Breakdown } from '../lib/types';
+
+export function BreakdownBars({ breakdown, confidence, synthetic }: { breakdown: Breakdown; confidence: number; synthetic: boolean }) {
+  return <div><div className="mb-5 flex items-end justify-between"><div><p className="eyebrow">SIGNAL DECOMPOSITION</p><h3 className="mt-1 text-lg font-semibold text-white">Feature Analysis Breakdown</h3></div><span className="text-xs text-slate-500">61 features</span></div><div className="space-y-4">{breakdownMeta.map(([key, label, description], index) => { const value = key === 'confidence' ? confidence * 100 : parsePercent(breakdown[key as keyof Breakdown]); return <motion.div key={key} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .1 }} title={description}><div className="mb-1.5 flex items-center justify-between text-xs"><span className="text-slate-300">{label}</span><span className="font-mono text-slate-400">{value.toFixed(1)}%</span></div><div className="h-2 overflow-hidden rounded-full bg-slate-800"><motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(value, 100)}%` }} transition={{ delay: index * .1 + .15, duration: .8 }} className={`h-full rounded-full ${synthetic ? 'bg-gradient-to-r from-amber-400 to-red-500' : 'bg-gradient-to-r from-emerald-400 to-blue-500'}`} /></div><p className="mt-1 text-[10px] text-slate-600">{description}</p></motion.div>; })}</div></div>;
+}
